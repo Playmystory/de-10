@@ -1,4 +1,5 @@
 "use strict";
+
 function dice_initialize(container, w, h) {
     $t.remove($t.id('loading_text'));
 
@@ -6,23 +7,23 @@ function dice_initialize(container, w, h) {
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
     var label = $t.id('label');
+    var clearBtn = $t.id('clear');
     var set = $t.id('set');
     var selector_div = $t.id('selector_div');
     var info_div = $t.id('info_div');
+
     on_set_change();
 
+    clearBtn.style.display = 'none';
+    set.style.visibility = 'hidden';
+
     function on_set_change(ev) { set.style.width = set.value.length + 3 + 'ex'; }
-    $t.bind(set, 'keyup', on_set_change);
     $t.bind(set, 'mousedown', function(ev) { ev.stopPropagation(); });
     $t.bind(set, 'mouseup', function(ev) { ev.stopPropagation(); });
     $t.bind(set, 'focus', function(ev) { $t.set(container, { class: '' }); });
     $t.bind(set, 'blur', function(ev) { $t.set(container, { class: 'svg' }); });
 
-    $t.bind($t.id('clear'), ['mouseup', 'touchend', 'touchcancel'], function(ev) {
-        ev.stopPropagation();
-        set.value = '0';
-        on_set_change();
-    });
+
 
     var box = new $t.dice.dice_box(canvas);
 
@@ -48,32 +49,18 @@ function dice_initialize(container, w, h) {
                 (result.reduce(function(s, a) { return s + a; }) + notation.constant);
         label.innerHTML = res;
         info_div.style.display = 'inline-block';
+        selector_div.style.display = 'none';
     }
 
-    box.bind_mouse(container, notation_getter, before_roll, after_roll);
-    box.bind_throw($t.id('throw'), notation_getter, before_roll, after_roll);
 
-    $t.bind(container, ['mouseup', 'touchend', 'touchcancel'], function(ev) {
-        if (selector_div.style.display == 'none') {
-            if (!box.rolling) show_selector();
-            box.rolling = false;
-            return;
-        }
-        var name = box.search_dice_by_mouse(ev);
-        if (name != undefined) {
-            var notation = $t.dice.parse_notation(set.value);
-            notation.set.push(name);
-            set.value = $t.dice.stringify_notation(notation);
-            on_set_change();
-        }
-    });
+    box.bind_throw($t.id('throw'), notation_getter, before_roll, after_roll);
 
     var params = $t.get_url_params();
     if (params.notation) {
         set.value = params.notation;
     }
     if (params.roll) {
-        $t.raise_event($t.id('throw'), 'mouseup');
+        $t.raise_event($t.id('throw'));
     }
     else {
         show_selector();

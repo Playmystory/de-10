@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="keywords" content="Play, story, dice, roller, 3D, 10 faces"/>
+<meta name="description" content="Playmystory online 3D dice 10 faces roller"/>
+<title>Playmystory 3d dice 10 faces roller</title>
+
+<style type="text/css">@import "../main.css";</style>
+<style type="text/css">@import "dice.css";</style>
+
+</head>
+
+<body class="svg" style="margin: 0">
+    <div class="control_panel">
+        <h6><img src="../favicon.ico" style="vertical-align: middle"></img> <a href="..">PMS</a></h6>
+        <p id="loading_text">Loading libraries, please wait a bit...</p>
+        <p id="info_text"><a href="#">Besoin d'aide?</a></p>
+    </div>
+    <div id="info_div" style="display: none">
+        <div class="center_field">
+            <span id="label"></span>
+        </div>
+        <div class="center_field">
+            <div class="bottom_field">
+                <span id="labelhelp">Aléa jacta est!</span>
+            </div>
+        </div>
+    </div>
+    <div id="selector_div" style="display: none">
+        <div class="center_field">
+            <div id="sethelp">
+                A vous de jouer! </br>
+                Cliquez sur "Lancer" pour suivre votre destiné...
+            </div>
+        </div>
+        <div class="center_field">
+            <input type="text" id="set" value="1d10"></input><br/>
+            <button id="clear">clear</button>
+            <button style="margin-left: 0.6em" id="throw">Lancer</button>
+        </div>
+    </div>
+    <div id="canvas"></div>
+
+    <script src="../libs/three.min.js"></script>
+    <script src="../libs/cannon.min.js"></script>
+    <script type="text/javascript" src="../teal.js"></script>
+    <script type="text/javascript" src="dice.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" defer="defer">
+        dice_initialize(document.body, window.innerWidth - 1, window.innerHeight - 1);
+    </script>
+</body>
+</html>
